@@ -18,41 +18,40 @@ public class JournalClass {
 
 	public String toIEEEString() {
 		return author.replace('}',' ').replace('{',' ') 
-				+ ".\"" + title.replace('}',' ').replace('{',' ') +"\"," 
-				+ journal
+				+ ".\"" + title.replace('}',' ').replace('{',' ') +"\","
+				+ journal.replace('}',' ').replace('{',' ')
 				+ ", vol." + volume.replace('}',' ').replace('{',' ') 
 				+ ", no." + number.replace('}',' ').replace('{',' ') 
-				+ ", p.=" + pages.replace('}',' ').replace('{',' ')
+				+ ", p." + pages.replace('}',' ').replace('{',' ')
 				+ "," + month.replace('}',' ').replace('{',' ') 
 				+ year.replace('}',' ').replace('{',' ') + ".";
 	}
 	
 	public String toACMString() {
 		return author.replace('}',' ').replace('{',' ') + "," 
-				+ ". " + year.replace('}',' ').replace('{',' ') 
-				+ ". " 
-				+ title.replace('}',' ').replace('{',' ')+"." + journal
-				+ ". PP" + number.replace('}',' ').replace('{',' ')
+				+ journal.replace('}',' ').replace('{',' ')
+				+ title.replace('}',' ').replace('{',' ')+"." 
+				+ ". "
+				+ volume.replace('}',' ').replace('{',' ')+ ","  
+				+ number.replace('}',' ').replace('{',' ')
 				+ "(" + year.replace('}',' ').replace('{',' ')
-				+ "), " +pages.replace('}',' ').replace('{',' ')
-				+ ". "+doi.replace('}',' ').replace('{',' ') + ".";
+				+ "), " + pages.replace('}',' ').replace('{',' ') + "." 
+				+ "DOI:https://doi.org/" + doi.replace('}',' ').replace('{',' ');
 	}
 	
 	public String toNJString() {
-		return author + ".\""+title+"\"," + journal + 
-				  ", vol." + volume + ", no." + number + ", p.=" + pages +
-				"," + month + year+".";
+		return author.replace('}',' ').replace('{',' ') + "," 
+				+ journal.replace('}',' ').replace('{',' ')
+				+ title.replace('}',' ').replace('{',' ')+"." 
+				+ ". "
+				+ volume.replace('}',' ').replace('{',' ')+ ","  
+				+ pages.replace('}',' ').replace('{',' ') 
+				+ "(" + year.replace('}',' ').replace('{',' ') + ").";
 	}
-
-
-
 
 
 	public JournalClass() {
 	}
-
-
-
 
 
 	public int getId() {
@@ -60,15 +59,9 @@ public class JournalClass {
 	}
 
 
-
-
-
 	public void setId(int id) {
 		this.id = id;
 	}
-
-
-
 
 
 	public String getAuthor() {
@@ -76,15 +69,9 @@ public class JournalClass {
 	}
 
 
-
-
-
 	public void setAuthor(String author) {
 		this.author = author;
 	}
-
-
-
 
 
 	public String getJournal() {
@@ -92,15 +79,9 @@ public class JournalClass {
 	}
 
 
-
-
-
 	public void setJournal(String journal) {
 		this.journal = journal;
 	}
-
-
-
 
 
 	public String getTitle() {
@@ -108,15 +89,9 @@ public class JournalClass {
 	}
 
 
-
-
-
 	public void setTitle(String title) {
 		this.title = title;
 	}
-
-
-
 
 
 	public String getYear() {
@@ -124,15 +99,9 @@ public class JournalClass {
 	}
 
 
-
-
-
 	public void setYear(String year) {
 		this.year = year;
 	}
-
-
-
 
 
 	public String getVolume() {
@@ -140,15 +109,9 @@ public class JournalClass {
 	}
 
 
-
-
-
 	public void setVolume(String volume) {
 		this.volume = volume;
 	}
-
-
-
 
 
 	public String getNumber() {
@@ -156,15 +119,9 @@ public class JournalClass {
 	}
 
 
-
-
-
 	public void setNumber(String number) {
 		this.number = number;
 	}
-
-
-
 
 
 	public String getPages() {
@@ -172,15 +129,9 @@ public class JournalClass {
 	}
 
 
-
-
-
 	public void setPages(String pages) {
 		this.pages = pages;
 	}
-
-
-
 
 
 	public String getKeyword() {
@@ -188,15 +139,9 @@ public class JournalClass {
 	}
 
 
-
-
-
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
 	}
-
-
-
 
 
 	public String getDoi() {
@@ -204,15 +149,9 @@ public class JournalClass {
 	}
 
 
-
-
-
 	public void setDoi(String doi) {
 		this.doi = doi;
 	}
-
-
-
 
 
 	public String getISSN() {
@@ -220,15 +159,9 @@ public class JournalClass {
 	}
 
 
-
-
-
 	public void setISSN(String iSSN) {
 		ISSN = iSSN;
 	}
-
-
-
 
 
 	public String getMonth() {
@@ -236,13 +169,8 @@ public class JournalClass {
 	}
 
 
-
-
-
 	public void setMonth(String month) {
 		this.month = month;
 	}
-
-
 
 }

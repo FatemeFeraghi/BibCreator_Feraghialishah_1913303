@@ -13,6 +13,7 @@ public class BibCreator {
 
 	final static String ARTICLE_KEY = "@ARTICLE";
 	final static String AUTHOR_KEY = "author";
+	final static String JOURNAL_KEY = "journal";
 	final static String TITLE_KEY = "title";
 	final static String YEAR_KEY = "year";
 	final static String VOLUME_KEY = "volume";
@@ -26,35 +27,79 @@ public class BibCreator {
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 
-
+//		readFile2();
 		readFromFile();
 
 	}
 
+//	void readFromFile() {
+//		for(int i = 1; i < 11; i++) 
+//		{
+//			System.out.println();
+//			BufferedReader br = new BufferedReader(new FileReader("Latex" + i + ".bib"));//FileReader
+//			System.out.println("Latex" + i + ".bib");
+//			
+//			int count = 0;
+//			StringBuilder sb = new StringBuilder();
+//			String line;
+//			try {
+//				line = br.readLine();
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			while (line != null)
+//			{
+//				count++;
+//		        String[] part = line.split("=");
+//		        String endBrace = part[part.length - 1];
+//		        boolean isBrace = false;
+//		        for (int j = 0; j < endBrace.length(); j++) {
+//		        	if(endBrace.charAt(i) == '{')
+//		        	{
+//		        		isBrace = true;
+//		        	
+//		        	}else if(isBrace){
+//		        		++count;
+//		        	}
+//	        		else if(endBrace.charAt(i) == '}'){
+//	        			isBrace = false;
+//	        		}					
+//				}
+//		        
+//		        if(count == 0)
+//		        {
+//		        	System.out.println("Error");
+//		        }
+//		        System.out.println(part);
+//		        line = br.readLine();
+//			}
+//		}
+//			
+//	}
 
-
-	public static void readFile2() {
-
-		for (int i = 1; i < 11; i++) {
-
-			File fileId = new File("Latex" + i + ".bib");
-
-			try {
-				Scanner data = new Scanner(fileId);
-				int lineNumber = 1;
-				while (data.hasNextLine()) {
-
-					String oneLine = data.nextLine();
-					System.out.println("Line " + lineNumber + " :" + oneLine);
-					lineNumber++;
-
-				}
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				return;
-			}
-		}
-	}
+//	public static void readFile2() {
+//
+//		for (int i = 1; i < 11; i++) {
+//
+//			File fileId = new File("Latex" + i + ".bib");
+//
+//			try {
+//				Scanner data = new Scanner(fileId);
+//				int lineNumber = 1;
+//				while (data.hasNextLine()) {
+//
+//					String oneLine = data.nextLine();
+//					System.out.println("Line " + lineNumber + " :" + oneLine);
+//					lineNumber++;
+//
+//				}
+//			} catch (FileNotFoundException e) {
+//				// TODO Auto-generated catch block
+//				return;
+//			}
+//		}
+//	}
 
 	public static void readFromFile() {
 
@@ -94,6 +139,10 @@ public class BibCreator {
 			switch (data[0]) {
 			case AUTHOR_KEY: {
 				journal.setAuthor(data[1]);
+				break;
+			}
+			case JOURNAL_KEY: {
+				journal.setJournal(data[1]);
 				break;
 			}
 			case TITLE_KEY: {
@@ -162,7 +211,7 @@ public class BibCreator {
 				try {
 					outputIEEE.close();
 					outputACM.close();
-					outputACM.close();
+					outputNJ.close();
 
 				} catch (IOException e) {
 					e.printStackTrace();
