@@ -26,7 +26,7 @@ public class BibCreator {
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-
+        System.out.println("Welcome to BibCreator!\n");
 //		readFile2();
 		readFromFile();
 
@@ -103,35 +103,47 @@ public class BibCreator {
 
 	public static void readFromFile() {
 
-		for (int i = 1; i < 11; i++) {
-			File fileId = new File("Latex" + i + ".bib");
-			try {
-				Scanner data = new Scanner(fileId);
-				ArrayList<JournalClass> journals = new ArrayList<JournalClass>();
-				JournalClass journal = new JournalClass();
+		try {
+			for (int i = 1; i < 11; i++) {
+				File fileId = new File("Latex" + i + ".bib");
+				if (!fileId.exists()) {
+					throw new FileInvalidException("Could not open input file Latex"+i+".bib for reading. \n\nPlease check if file exists! Program will terminate after closing any opened files.\n");
+				}
+				try {
+					Scanner data = new Scanner(fileId);
 
-				while (data.hasNextLine()) {
-					if (!data.equals("")) {
-						String oneLine = data.nextLine();
-						StringTokenizer st = new StringTokenizer(oneLine, ",");
-						String value = st.nextToken();
-						String[] line = value.split("=");
-						if (value.equals("}")) {
-							writeTofiles(i,journal);
-							journals.add(journal);
-							journal = new JournalClass();
-						}else {
-							journal = parseJournal(line, journal);
+					ArrayList<JournalClass> journals = new ArrayList<JournalClass>();
+					JournalClass journal = new JournalClass();
+
+					while (data.hasNextLine()) {
+						if (!data.equals("")) {
+							String oneLine = data.nextLine();
+							StringTokenizer st = new StringTokenizer(oneLine, ",");
+							String value = st.nextToken();
+							String[] line = value.split("=");
+							if (value.equals("}")) {
+								writeTofiles(i,journal);
+								journals.add(journal);
+								journal = new JournalClass();
+							}else {
+								journal = parseJournal(line, journal);
+							}
+							}
 						}
-					}
+					data.close();
+
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+				}
 				}
 
-
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
+			}	
+		catch (FileInvalidException e) {
+			// TODO: handle exception
+		
+			System.out.println(e.getMessage());
 			}
 		}
-	}
 
 	public static JournalClass parseJournal(String[] data, JournalClass journal) {
 
