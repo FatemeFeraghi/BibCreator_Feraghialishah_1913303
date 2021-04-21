@@ -29,7 +29,45 @@ public class BibCreator {
         System.out.println("Welcome to BibCreator!\n");
 //		readFile2();
 		readFromFile();
+		displayFile();
 
+	}
+
+    private static void displayFile() throws IOException {
+		// TODO Auto-generated method stub
+    		int i = 2;
+            Scanner kb = new Scanner(System.in);
+    		while (i > 0) {
+    		   	BufferedReader br = null;
+                String line = null;
+            	System.out.print("Please enter the name of a file you would like to review: ");
+                String FileReview = kb.nextLine();
+                try {
+                	File fileId = new File(FileReview);
+    				if (!fileId.exists()) {
+    					throw new FileInvalidException("Could not open input file. File does not exist; possibly it could not be created!");
+    				}
+                    br = new BufferedReader(new FileReader(FileReview));
+                    while((line = br.readLine()) != null) {
+                        System.out.println(line);
+                    }
+        			br.close();
+    				System.out.println("Thank you for using BibCreator");
+                    kb.close();
+                    System.exit(0);
+                }
+                catch (FileInvalidException e) {
+        			// TODO: handle exception
+        			System.out.println(e.getMessage());
+        			i--;
+        			if (i <= 0) {
+        				System.out.println("Thank you for using BibCreator");
+        				kb.close();
+            			System.exit(0);
+        			}
+        			}
+
+    		}     
 	}
 
 //	void readFromFile() {
