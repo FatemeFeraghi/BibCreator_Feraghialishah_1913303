@@ -64,7 +64,7 @@ public class BibCreator {
         				System.out.println("Thank you for using BibCreator");
         				kb.close();
             			System.exit(0);
-        			}
+        				}
         			}
 
     		}     
@@ -140,7 +140,7 @@ public class BibCreator {
 //	}
 
 	public static void readFromFile() {
-
+		int count = 0;
 		try {
 			for (int i = 1; i < 11; i++) {
 				File fileId = new File("Latex" + i + ".bib");
@@ -149,6 +149,11 @@ public class BibCreator {
 				}
 				try {
 					Scanner data = new Scanner(fileId);
+					String error = checkEmptyField(data);
+					if (error != null) {
+						count++;
+						throw new FileInvalidException("Error: Detected Empty Field!\n============================\n\nProblem detected with file Latex" + i + ".bib\n" + "File is Invalid: Field \"" + error + "\" is Empty. Processing stopped at this point. Other empty fields may be present as well!\n");
+					}
 
 					ArrayList<JournalClass> journals = new ArrayList<JournalClass>();
 					JournalClass journal = new JournalClass();
@@ -165,14 +170,14 @@ public class BibCreator {
 								journal = new JournalClass();
 							}else {
 								journal = parseJournal(line, journal);
-							}
+								}
 							}
 						}
 					data.close();
 
 					} catch (Exception e) {
 						System.out.println(e.getMessage());
-				}
+						}
 				}
 
 			}	
@@ -181,7 +186,20 @@ public class BibCreator {
 		
 			System.out.println(e.getMessage());
 			}
+		System.out.println("A total of "+ count + " files were invalid, and could not be processed. All other " + (10 - count) + " \"Valid\" files have been created.\n");
 		}
+
+	private static String checkEmptyField(Scanner data) {
+	// TODO Auto-generated method stub
+		while (data.hasNextLine()) {
+	        String line = data.nextLine();
+	        if (line.contains("{}")) { 
+				StringTokenizer st = new StringTokenizer(line, "=");
+	            return st.nextToken();
+	        }
+	    }
+		return null;
+	}
 
 	public static JournalClass parseJournal(String[] data, JournalClass journal) {
 
