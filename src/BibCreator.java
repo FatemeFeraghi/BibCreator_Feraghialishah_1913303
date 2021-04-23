@@ -39,7 +39,7 @@ public class BibCreator {
         System.out.println("Welcome to BibCreator!\n");
 //		readFile2();
 		readFromFile();
-//		displayFile();
+		displayFile();
 
 	}
 	
@@ -59,7 +59,7 @@ public class BibCreator {
     				}
                     br = new BufferedReader(new FileReader(FileReview));
                     while((line = br.readLine()) != null) {
-                        System.out.println(line);
+                        System.out.println(line + '\n');
                     }
         			br.close();
     				System.out.println("Thank you for using BibCreator");
@@ -82,26 +82,27 @@ public class BibCreator {
 
 	public static void readFromFile() {
 
-//		int count = 0;
-//		try {
+		int count = 0;
+		try {
 		
 		for (int i = 1; i < 11; i++) {
 			File fileId = new File("Latex" + i + ".bib");
 			
-//			if (!fileId.exists()) {
-//				throw new FileInvalidException("Could not open input file Latex"+i+".bib for reading. \n\nPlease check if file exists! Program will terminate after closing any opened files.\n");
-//			}
+			if (!fileId.exists()) {
+				throw new FileInvalidException("Could not open input file Latex"+i+".bib for reading. \n\nPlease check if file exists! Program will terminate after closing any opened files.\n");
+			}
 			
 			try {
 				Scanner data = new Scanner(fileId);
 				
-//				String error = checkEmptyField(data);
-//				if (error != null) {
-//					count++;
-//					throw new FileInvalidException("Error: Detected Empty Field!\n============================\n\n"
-//							+ "Problem detected with file Latex" + i + ".bib\n" + "File is Invalid: Field \"" 
-//							+ error + "\" is Empty. Processing stopped at this point. Other empty fields may be present as well!\n");
-//				}
+				String error = checkEmptyField(fileId);
+				if (error != null) {
+					count++;
+					data.close();
+					throw new FileInvalidException("Error: Detected Empty Field!\n============================\n\n"
+							+ "Problem detected with file Latex" + i + ".bib\n" + "File is Invalid: Field \"" 
+							+ error + "\" is Empty. Processing stopped at this point. Other empty fields may be present as well!\n");
+				}
 				
 				JournalClass journal = new JournalClass();
 				ArrayList<JournalClass> journals = new ArrayList<JournalClass>();
@@ -119,32 +120,35 @@ public class BibCreator {
 							journal = parseJournal(line, journal);
 						}
 					}
-//				data.close();
 				}
 				writeTofiles(i, journals);
+				data.close();
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
 		}
-		}
-//	}catch (FileInvalidException e) {
-//			// TODO: handle exception
-//		
-//			System.out.println(e.getMessage());
-//			}
-//		System.out.println("A total of "+ count + " files were invalid, and could not be processed. All other " + (10 - count) + " \"Valid\" files have been created.\n");
-//		}
+	} catch (FileInvalidException e) {
+			// TODO: handle exception
+		
+			System.out.println(e.getMessage());
+			System.exit(0);
+			}	
+		System.out.println("A total of "+ count + " files were invalid, and could not be processed. All other " + (10 - count) + " \"Valid\" files have been created.\n");
+	}
 		
 
-	private static String checkEmptyField(Scanner data) {
+	private static String checkEmptyField(File fileId) throws FileNotFoundException {
 		// TODO Auto-generated method stub
+		Scanner data = new Scanner(fileId);
 			while (data.hasNextLine()) {
 		        String line = data.nextLine();
 		        if (line.contains("{}")) { 
 					StringTokenizer st = new StringTokenizer(line, "=");
+					data.close();
 		            return st.nextToken();
 		        }
 		    }
+			data.close();
 			return null;
 	}
 	
