@@ -55,14 +55,17 @@ public class BibCreator {
                 try {
                 	File fileId = new File(FileReview);
     				if (!fileId.exists()) {
+    					if (i < 2)
+    						throw new FileInvalidException("\nCould not open input file again! Either file does not exist or could not be created.");
     					throw new FileInvalidException("Could not open input file. File does not exist; possibly it could not be created!");
     				}
+    				System.out.println("Here are the contents of the successfully created JSON File: " + FileReview);
                     br = new BufferedReader(new FileReader(FileReview));
                     while((line = br.readLine()) != null) {
                         System.out.println(line + '\n');
                     }
         			br.close();
-    				System.out.println("Thank you for using BibCreator");
+    				System.out.println("Goodbye! Hope you have enjoyed creating the needed files using BibCreator.");
                     kb.close();
                     System.exit(0);
                 }
@@ -71,10 +74,11 @@ public class BibCreator {
         			System.out.println(e.getMessage());
         			i--;
         			if (i <= 0) {
-        				System.out.println("Thank you for using BibCreator");
+        				System.out.println("Sorry! I am unable to display your desired files! Program will exit!");
         				kb.close();
             			System.exit(0);
         				}
+        			System.out.println("\nHowever, you will be allowed another chance to enter another file name.");
         			}
 
     		}     
