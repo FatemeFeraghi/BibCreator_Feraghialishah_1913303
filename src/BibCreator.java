@@ -49,20 +49,21 @@ public class BibCreator {
             Scanner kb = new Scanner(System.in);
     		while (i > 0) {
     		   	BufferedReader br = null;
-                String line = null;
             	System.out.print("Please enter the name of a file you would like to review: ");
-                String FileReview = kb.nextLine();
+                String fileName = kb.nextLine();
                 try {
-                	File fileId = new File(FileReview);
+                	File fileId = new File(fileName);
     				if (!fileId.exists()) {
     					if (i < 2)
     						throw new FileInvalidException("\nCould not open input file again! Either file does not exist or could not be created.");
     					throw new FileInvalidException("Could not open input file. File does not exist; possibly it could not be created!");
     				}
-    				System.out.println("Here are the contents of the successfully created JSON File: " + FileReview);
-                    br = new BufferedReader(new FileReader(FileReview));
-                    while((line = br.readLine()) != null) {
+    				System.out.println("Here are the contents of the successfully created JSON File: " + fileName);
+                    br = new BufferedReader(new FileReader(fileName));
+                    String line = br.readLine();
+                    while (line != null) {
                         System.out.println(line + '\n');
+                        line = br.readLine();
                     }
         			br.close();
     				System.out.println("Goodbye! Hope you have enjoyed creating the needed files using BibCreator.");
